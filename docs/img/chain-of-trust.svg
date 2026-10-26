@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="572" viewBox="0 0 1180 572" role="img" aria-labelledby="t d">
+  <title id="t">Chain of trust</title>
+  <desc id="d">Trình duyệt chỉ tin root CA có sẵn trong hệ điều hành; server phải gửi kèm intermediate thì chain mới đủ.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f3f7fc"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3.5" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <filter id="glow" x="-90%" y="-90%" width="280%" height="280%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+<marker id="ar-client" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#F59E0B"/></marker>
+<marker id="ar-web" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3B82F6"/></marker>
+<marker id="ar-php" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8B5CF6"/></marker>
+<marker id="ar-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#10B981"/></marker>
+<marker id="ar-cache" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#EAB308"/></marker>
+<marker id="ar-danger" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#EF4444"/></marker>
+<marker id="ar-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#22C55E"/></marker>
+<marker id="ar-neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#94A3B8"/></marker>
+<marker id="ar-cmd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0891B2"/></marker>
+  </defs>
+
+  <style>
+    text { font-family: "Segoe UI","Helvetica Neue",Arial,"Noto Sans",sans-serif; }
+    .title { font-size: 22px; font-weight: 700; fill: #0b1220; }
+    .sub   { font-size: 13.5px; fill: #64748b; }
+    .n     { font-size: 16px; font-weight: 650; }
+    .s     { font-size: 12.5px; fill: #64748b; }
+    .mono  { font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace; font-size: 12.5px; }
+    .band  { font-size: 13px; font-weight: 700; letter-spacing: .2px; }
+
+    .flow {
+      fill: none; stroke-width: 2.8; stroke-linecap: round;
+      stroke-dasharray: 2 12;
+      animation: flow 1.15s linear infinite;
+    }
+    @keyframes flow { to { stroke-dashoffset: -28; } }
+
+    .dashflow {
+      fill: none; stroke-width: 2.2; stroke-dasharray: 8 7;
+      animation: dashflow 1.7s linear infinite;
+    }
+    @keyframes dashflow { to { stroke-dashoffset: -30; } }
+
+    .pulse { animation: pulse 2.8s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: .35 } 50% { opacity: .95 } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .flow, .dashflow, .pulse { animation: none; }
+    }
+  </style>
+
+  <rect x="0" y="0" width="1180" height="572" rx="18" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1179" height="571" rx="18" fill="none" stroke="#e2e8f0"/>
+
+<text x="36" y="52" class="title">Chain of trust: vì sao thiếu intermediate lại lỗi</text>
+<text x="36" y="80" class="sub">Máy bạn test bằng Chrome có thể vẫn xanh — client thật thì không</text>
+<rect x="36" y="140" width="150" height="100" rx="13" fill="#FFF7ED" stroke="#F59E0B" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="111.0" y="184.0" text-anchor="middle" class="n" fill="#7C2D12" style="font-size:16px">Trình duyệt</text>
+<text x="111.0" y="203.5" text-anchor="middle" class="s" fill="#7C2D12">trust store của HĐH</text>
+<rect x="226" y="140" width="160" height="100" rx="13" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="306.0" y="184.0" text-anchor="middle" class="n" fill="#1E3A8A" style="font-size:16px">Web server</text>
+<text x="306.0" y="203.5" text-anchor="middle" class="mono" fill="#1E3A8A">example.com:443</text>
+<rect x="430" y="140" width="150" height="100" rx="13" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="505.0" y="184.0" text-anchor="middle" class="n" fill="#4C1D95" style="font-size:16px">Leaf cert</text>
+<text x="505.0" y="203.5" text-anchor="middle" class="mono" fill="#4C1D95">example.com</text>
+<rect x="620" y="140" width="160" height="100" rx="13" fill="#ECFDF5" stroke="#10B981" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="700.0" y="184.0" text-anchor="middle" class="n" fill="#064E3B" style="font-size:16px">Intermediate</text>
+<text x="700.0" y="203.5" text-anchor="middle" class="s" fill="#064E3B">R11 / YE2</text>
+<rect x="820" y="140" width="150" height="100" rx="13" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="895.0" y="184.0" text-anchor="middle" class="n" fill="#0F172A" style="font-size:16px">Root CA</text>
+<text x="895.0" y="203.5" text-anchor="middle" class="s" fill="#0F172A">ISRG Root X1</text>
+<path d="M186 172 L222 172" fill="none" stroke="#F59E0B" stroke-opacity="0.35" stroke-width="2" marker-end="url(#ar-client)"/>
+<path d="M186 172 L222 172" class="flow" stroke="#F59E0B" style="animation-delay:-0.0s"/>
+<circle r="4.4" fill="#F59E0B" filter="url(#glow)"><animateMotion dur="2.0s" begin="0.00s" repeatCount="indefinite" path="M186 172 L222 172"/></circle>
+<text x="204" y="164" text-anchor="middle" fill="#b45309" style="font-size:11.5px;font-weight:600">① SNI</text>
+<path d="M222 208 L190 208" fill="none" stroke="#3B82F6" stroke-opacity="0.35" stroke-width="2" marker-end="url(#ar-web)"/>
+<path d="M222 208 L190 208" class="flow" stroke="#3B82F6" style="animation-delay:-0.0s"/>
+<circle r="4.4" fill="#3B82F6" filter="url(#glow)"><animateMotion dur="2.0s" begin="0.60s" repeatCount="indefinite" path="M222 208 L190 208"/></circle>
+<text x="210" y="224" text-anchor="middle" fill="#1d4ed8" style="font-size:11.5px;font-weight:600">② chain</text>
+<path d="M386 190 L426 190" fill="none" stroke="#3B82F6" stroke-opacity="0.35" stroke-width="2" marker-end="url(#ar-web)"/>
+<path d="M386 190 L426 190" class="flow" stroke="#3B82F6" style="animation-delay:-0.0s"/>
+<circle r="4.4" fill="#3B82F6" filter="url(#glow)"><animateMotion dur="2.2s" begin="0.30s" repeatCount="indefinite" path="M386 190 L426 190"/></circle>
+<path d="M580 190 L616 190" fill="none" stroke="#8B5CF6" stroke-opacity="0.35" stroke-width="2" marker-end="url(#ar-php)"/>
+<path d="M580 190 L616 190" class="flow" stroke="#8B5CF6" style="animation-delay:-0.0s"/>
+<circle r="4.4" fill="#8B5CF6" filter="url(#glow)"><animateMotion dur="2.2s" begin="0.70s" repeatCount="indefinite" path="M580 190 L616 190"/></circle>
+<text x="598" y="180" text-anchor="middle" fill="#6d28d9" style="font-size:11.5px;font-weight:600">③</text>
+<path d="M780 190 L816 190" fill="none" stroke="#10B981" stroke-opacity="0.35" stroke-width="2" marker-end="url(#ar-data)"/>
+<path d="M780 190 L816 190" class="flow" stroke="#10B981" style="animation-delay:-0.0s"/>
+<circle r="4.4" fill="#10B981" filter="url(#glow)"><animateMotion dur="2.2s" begin="1.00s" repeatCount="indefinite" path="M780 190 L816 190"/></circle>
+<text x="798" y="180" text-anchor="middle" fill="#047857" style="font-size:11.5px;font-weight:600">④</text>
+<path d="M111 240 L111 302 L895 302 L895 244" fill="none" stroke="#22C55E" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ar-ok)"/>
+<path d="M111 240 L111 302 L895 302 L895 244" class="dashflow" stroke="#22C55E" opacity="0.85"/>
+<circle r="4.4" fill="#22C55E" filter="url(#glow)"><animateMotion dur="4.2s" begin="0.00s" repeatCount="indefinite" path="M111 240 L111 302 L895 302 L895 244"/></circle>
+<text x="503" y="294" text-anchor="middle" fill="#15803d" style="font-size:12px;font-weight:600">⑤ đối chiếu root trong trust store của máy</text>
+<rect x="36" y="342" width="1108" height="164" rx="14" fill="#FEF2F2" fill-opacity="0.55" stroke="#FCA5A5" stroke-dasharray="7 5"/>
+<text x="56" y="368" text-anchor="start" fill="#B91C1C" style="font-size:13px;font-weight:600">Khi server chỉ gửi leaf (thiếu intermediate)</text>
+<rect x="56" y="384" width="200" height="72" rx="13" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="156.0" y="414.0" text-anchor="middle" class="n" fill="#7F1D1D" style="font-size:15px">Chỉ gửi leaf</text>
+<text x="156.0" y="433.5" text-anchor="middle" class="s" fill="#7F1D1D">chain = 1 cert</text>
+<rect x="330" y="384" width="350" height="72" rx="13" fill="#F0FDF4" stroke="#22C55E" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="505.0" y="414.0" text-anchor="middle" class="n" fill="#14532D" style="font-size:15px">Chrome desktop</text>
+<text x="505.0" y="433.5" text-anchor="middle" class="s" fill="#14532D">tự tải intermediate (AIA) → vẫn xanh</text>
+<rect x="742" y="384" width="380" height="72" rx="13" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="932.0" y="414.0" text-anchor="middle" class="n" fill="#7F1D1D" style="font-size:15px">Android cũ · Java · curl</text>
+<text x="932.0" y="433.5" text-anchor="middle" class="s" fill="#7F1D1D">không tải bù → lỗi chain</text>
+<path d="M256 420 L326 420" fill="none" stroke="#22C55E" stroke-opacity="0.35" stroke-width="2" marker-end="url(#ar-ok)"/>
+<path d="M256 420 L326 420" class="flow" stroke="#22C55E" style="animation-delay:-0.0s"/>
+<circle r="4.4" fill="#22C55E" filter="url(#glow)"><animateMotion dur="2.4s" begin="0.20s" repeatCount="indefinite" path="M256 420 L326 420"/></circle>
+<path d="M256 420 C290 452 700 452 738 420" fill="none" stroke="#EF4444" stroke-opacity="0.35" stroke-width="2" marker-end="url(#ar-danger)"/>
+<path d="M256 420 C290 452 700 452 738 420" class="flow" stroke="#EF4444" style="animation-delay:-0.0s"/>
+<circle r="4.4" fill="#EF4444" filter="url(#glow)"><animateMotion dur="3.0s" begin="0.90s" repeatCount="indefinite" path="M256 420 C290 452 700 452 738 420"/></circle>
+<circle cx="56" cy="540" r="4.4" fill="#22C55E" filter="url(#glow)"/>
+<text x="68" y="544" text-anchor="start" fill="#475569" style="font-size:12px;font-weight:600">gói tin di chuyển theo chiều xác thực</text>
+<circle cx="326.2" cy="540" r="4.4" fill="#94A3B8" filter="url(#glow)"/>
+<text x="338.2" y="544" text-anchor="start" fill="#475569" style="font-size:12px;font-weight:600">nét đứt = đối chiếu nội bộ, không qua mạng</text>
+</svg>

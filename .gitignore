@@ -1,0 +1,21 @@
+# Không bao giờ commit khoá riêng tư
+*.key
+*.pem
+*.pfx
+*.p12
+*.jks
+*.crt
+*.cer
+*.csr
+*.der
+*.p7b
+!conf/*.crt.example
+
+# File tạm khi kiểm tra
+/tmp/
+*.swp
+*~
+.DS_Store
+
+# Kết quả script audit
+ssl-audit-*.txt
