@@ -19,3 +19,7 @@
 
 # Kết quả script audit
 ssl-audit-*.txt
+
+# Python
+__pycache__/
+*.pyc
