@@ -189,14 +189,21 @@ def pill(x, y, w, text, kind):
 
 
 def legend(x, y, items):
-    """items: list of (kind, text) — chấm màu + mô tả, xếp ngang."""
+    """items: list of (kind, text). kind == "dash" ve net dut thay vi cham mau."""
     out = []
     cx = x
     for kind, text in items:
-        colour = ARROW_COLORS[kind]
-        out.append(f'<circle cx="{cx}" cy="{y - 4}" r="4.4" fill="{colour}" filter="url(#glow)"/>')
-        out.append(label(cx + 12, y, text, anchor="start", size=12))
-        cx += 26 + len(text) * 6.6
+        if kind == "dash":
+            out.append(f'<line x1="{cx}" y1="{y - 4}" x2="{cx + 34}" y2="{y - 4}" '
+                       f'stroke="#94A3B8" stroke-width="2" stroke-dasharray="7 6"/>')
+            cx += 46
+        else:
+            colour = ARROW_COLORS[kind]
+            out.append(f'<circle cx="{cx}" cy="{y - 4}" r="4.4" fill="{colour}" '
+                       f'filter="url(#glow)"/>')
+            cx += 12
+        out.append(label(cx, y, text, anchor="start", size=12))
+        cx += len(text) * 6.6 + 30
     return "\n".join(out)
 
 
@@ -210,29 +217,28 @@ s = [head(W, H, "Chain of trust",
 s.append('<text x="36" y="52" class="title">Chain of trust: vì sao thiếu intermediate lại lỗi</text>')
 s.append('<text x="36" y="80" class="sub">Máy bạn test bằng Chrome có thể vẫn xanh — client thật thì không</text>')
 
-cy, chh = 140, 100
+cy, chh = 142, 100
 s.append(card(36, cy, 150, chh, "client", ["Trình duyệt", "trust store của HĐH"]))
-s.append(card(226, cy, 160, chh, "web", ["Web server", "example.com:443"]))
-s.append(card(430, cy, 150, chh, "php", ["Leaf cert", "example.com"]))
-s.append(card(620, cy, 160, chh, "data", ["Intermediate", "R11 / YE2"]))
-s.append(card(820, cy, 150, chh, "neutral", ["Root CA", "ISRG Root X1"]))
+s.append(card(268, cy, 170, chh, "web", ["Web server", "example.com:443"]))
+s.append(card(518, cy, 150, chh, "php", ["Leaf cert", "example.com"]))
+s.append(card(748, cy, 160, chh, "data", ["Intermediate", "R11 / YE2"]))
+s.append(card(984, cy, 160, chh, "neutral", ["Root CA", "ISRG Root X1"]))
 
-# handshake hai chiều
-s.append(conn("M186 172 L222 172", "client", dur=2.0))
-s.append(label(204, 164, "① SNI", fill="#b45309", size=11.5))
-s.append(conn("M222 208 L190 208", "web", dur=2.0, begin=0.6, dash=False))
-s.append(label(210, 224, "② chain", fill="#1d4ed8", size=11.5))
+# handshake hai chiều: ① sang phải, ② trả về
+s.append(conn("M186 176 L262 176", "client", dur=2.0))
+s.append(label(258, 166, "① SNI", anchor="end", fill="#b45309", size=11.5))
+s.append(conn("M262 212 L194 212", "web", dur=2.0, begin=0.6))
+s.append(label(196, 234, "② chain", anchor="start", fill="#1d4ed8", size=11.5))
 
-# server gửi leaf, leaf được ký bởi intermediate, intermediate bởi root
-s.append(conn("M386 190 L426 190", "web", dur=2.2, begin=0.3))
-s.append(conn("M580 190 L616 190", "php", dur=2.2, begin=0.7))
-s.append(label(598, 180, "③", fill="#6d28d9", size=11.5))
-s.append(conn("M780 190 L816 190", "data", dur=2.2, begin=1.0))
-s.append(label(798, 180, "④", fill="#047857", size=11.5))
+# server dùng leaf; leaf được intermediate ký; intermediate được root ký
+s.append(conn("M438 194 L514 194", "web", dur=2.2, begin=0.3))
+s.append(conn("M668 194 L744 194", "data", dur=2.2, begin=0.7))
+s.append(conn("M908 194 L980 194", "data", dur=2.2, begin=1.0))
 
 # U: trình duyệt đối chiếu root trong trust store
-s.append(conn("M111 240 L111 302 L895 302 L895 244", "ok", dots=1, dur=4.2, dash=True))
-s.append(label(503, 294, "⑤ đối chiếu root trong trust store của máy", fill="#15803d", size=12))
+s.append(conn("M111 242 L111 306 L1064 306 L1064 246", "ok", dots=1, dur=4.2, dash=True))
+s.append(label(560, 298, "③ đối chiếu root trong trust store của máy",
+               fill="#15803d", size=12))
 
 # khối cảnh báo
 s.append('<rect x="36" y="342" width="1108" height="164" rx="14" fill="#FEF2F2" '
@@ -243,10 +249,11 @@ s.append(card(56, 384, 200, 72, "danger", ["Chỉ gửi leaf", "chain = 1 cert"]
 s.append(card(330, 384, 350, 72, "ok", ["Chrome desktop", "tự tải intermediate (AIA) → vẫn xanh"], fs=15))
 s.append(card(742, 384, 380, 72, "danger", ["Android cũ · Java · curl", "không tải bù → lỗi chain"], fs=15))
 s.append(conn("M256 420 L326 420", "ok", dur=2.4, begin=0.2))
-s.append(conn("M256 420 C290 452 700 452 738 420", "danger", dur=3.0, begin=0.9))
+# đi vòng dưới card Chrome để không cắt qua nó
+s.append(conn("M156 456 L156 484 L932 484 L932 460", "danger", dots=1, dur=3.6, begin=0.9))
 
-s.append(legend(56, 544, [("ok", "gói tin di chuyển theo chiều xác thực"),
-                          ("neutral", "nét đứt = đối chiếu nội bộ, không qua mạng")]))
+s.append(legend(56, 546, [("ok", "gói tin di chuyển theo chiều xác thực"),
+                          ("dash", "nét đứt = đối chiếu nội bộ / phản hồi")]))
 emit("chain-of-trust.svg", s)
 
 
@@ -268,8 +275,8 @@ s.append(card(876, 112, 228, 64, "web", ["Web server :80", "hoặc DNS (bản gh
 
 # lifeline
 for x in (X1, X2, X3):
-    s.append(f'<line x1="{x}" y1="180" x2="{x}" y2="556" stroke="#CBD5E1" '
-             f'stroke-width="1.6" stroke-dasharray="4 6"/>')
+    s.append(f'<line x1="{x}" y1="180" x2="{x}" y2="556" stroke="#94A3B8" '
+             f'stroke-width="1.8" stroke-dasharray="3 5"/>')
 
 # dải HTTP-01
 s.append('<rect x="36" y="206" width="1108" height="176" rx="13" fill="#EFF6FF" '
